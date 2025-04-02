@@ -25,6 +25,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
+	"github.com/miyunari/model-validation-controller/internal/webhooks"
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
@@ -35,7 +36,6 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
-	"github.com/miyunari/model-validation-controller/internal/webhooks"
 
 	mlv1alpha1 "github.com/miyunari/model-validation-controller/api/v1alpha1"
 	// +kubebuilder:scaffold:imports
@@ -94,6 +94,7 @@ func main() {
 	}
 
 	webhookServer := webhook.NewServer(webhook.Options{
+		CertDir: os.Getenv("CERT_DIR"),
 		TLSOpts: tlsOpts,
 	})
 
