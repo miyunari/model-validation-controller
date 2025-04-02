@@ -34,6 +34,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/metrics/filters"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
+	"github.com/miyunari/model-validation-controller/internal/webhooks"
 
 	mlv1alpha1 "github.com/miyunari/model-validation-controller/api/v1alpha1"
 	// +kubebuilder:scaffold:imports
@@ -153,6 +155,13 @@ func main() {
 		setupLog.Error(err, "unable to set up ready check")
 		os.Exit(1)
 	}
+
+	decoder := admission.NewDecoder(mgr.GetScheme())
+
+	interceptor := webhooks.NewPodInterceptor(mgr.GetClient(), decoder)
+	mgr.GetWebhookServer().Register("/mutate-v1-pod", &admission.Webhook{
+		Handler: interceptor,
+	})
 
 	setupLog.Info("starting manager")
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {

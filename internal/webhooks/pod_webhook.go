@@ -1,4 +1,4 @@
-package main
+package webhooks
 
 import (
 	"context"
@@ -16,10 +16,10 @@ import (
 	v1alpha1 "github.com/miyunari/model-validation-controller/api/v1alpha1"
 )
 
-// NewPodInterceptorWebhook creates a new pod mutating webhook to be registered
-func NewPodInterceptorWebhook(c client.Client, decoder admission.Decoder) webhook.AdmissionHandler {
+// NewPodInterceptor creates a new pod mutating webhook to be registered
+func NewPodInterceptor(c client.Client, decoder admission.Decoder) webhook.AdmissionHandler {
 	return &podInterceptor{
-		client: c,
+		client:  c,
 		decoder: decoder,
 	}
 }
@@ -84,11 +84,11 @@ func (p *podInterceptor) Handle(ctx context.Context, req admission.Request) admi
 		vm = append(vm, c.VolumeMounts...)
 	}
 	pp.Spec.InitContainers = append(pp.Spec.InitContainers, corev1.Container{
-		Name:    modelValidationInitContainerName,
+		Name:            modelValidationInitContainerName,
 		ImagePullPolicy: corev1.PullAlways,
-		Image:   "ghcr.io/miyunari/model-transparency-cli:latest", // TODO: get image from operator config.
-		Command: args,
-		VolumeMounts: vm,
+		Image:           "ghcr.io/miyunari/model-transparency-cli:latest", // TODO: get image from operator config.
+		Command:         args,
+		VolumeMounts:    vm,
 	})
 	marshaledPod, err := json.Marshal(pp)
 	if err != nil {
