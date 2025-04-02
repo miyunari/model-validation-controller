@@ -1,0 +1,23 @@
+# permissions for end users to view modelvalidations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: sdk-init
+    app.kubernetes.io/managed-by: kustomize
+  name: modelvalidation-viewer-role
+rules:
+- apiGroups:
+  - ml.sigstore.dev
+  resources:
+  - modelvalidations
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ml.sigstore.dev
+  resources:
+  - modelvalidations/status
+  verbs:
+  - get

@@ -1,0 +1,9 @@
+apiVersion: ml.sigstore.dev/v1alpha1
+kind: ModelValidation
+metadata:
+  labels:
+    app.kubernetes.io/name: sdk-init
+    app.kubernetes.io/managed-by: kustomize
+  name: modelvalidation-sample
+spec:
+  # TODO(user): Add fields here
