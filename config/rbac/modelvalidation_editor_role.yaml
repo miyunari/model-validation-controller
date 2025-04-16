@@ -1,0 +1,27 @@
+# permissions for end users to edit modelvalidations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: sdk-init
+    app.kubernetes.io/managed-by: kustomize
+  name: modelvalidation-editor-role
+rules:
+- apiGroups:
+  - ml.sigstore.dev
+  resources:
+  - modelvalidations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ml.sigstore.dev
+  resources:
+  - modelvalidations/status
+  verbs:
+  - get

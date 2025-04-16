@@ -1,0 +1,22 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - rhtasv1alpha1
+  resources:
+  - ModelValidation
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rhtasv1alpha1
+  resources:
+  - ModelValidation/status
+  verbs:
+  - get
+  - patch
+  - update

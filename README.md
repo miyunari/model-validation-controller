@@ -1,9 +1,6 @@
 # Model Validation Controller
 
-This project is a proof of concept based on the [sigstore/model-transperency-cli](https://github.com/sigstore/model-transparency).
-It offers a Kubernetes/OpenShift controller designed to validate AI models before they are picked up by actual
-workload. This project provides a webhook that adds an initcontainer to perform model validation. 
-The controller uses a custom resource to define how the models should be validated, such as utilizing [Sigstore](https://www.sigstore.dev/) or public keys.
+This project is a proof of concept based on the [sigstore/model-transperency-cli](https://github.com/sigstore/model-transparency). It offers a Kubernetes/OpenShift controller designed to validate AI models before they are picked up by actual workload. This project provides a webhook that adds an initcontainer to perform model validation. The controller uses a custom resource to define how the models should be validated, such as utilizing [Sigstore](https://www.sigstore.dev/) or public keys.
 
 ### Features
 
@@ -16,7 +13,7 @@ The controller uses a custom resource to define how the models should be validat
 
 - Kubernetes 1.29+ or OpenShift 4.16+
 - Proper configuration for model validation (e.g., Sigstore, public keys)
-- A singed model (e.g. check the `testdata` or `examples` folder)
+- A signed model (e.g. check the `testdata` or `examples` folder)
 
 ### Installation
 
@@ -33,6 +30,38 @@ kubectl delete -k https://raw.githubusercontent.com/miyunari/model-validation-co
 # or local
 kubectl delete -k manifests
 ```
+
+#### Running the Webhook Server Locally with Self-Signed Certs
+
+The webhook server requires TLS certificates. To run it locally using `make run`, you can generate self-signed certs manually:
+
+```
+mkdir -p /tmp/k8s-webhook-server/serving-certs
+
+openssl req -x509 -newkey rsa:2048 -nodes \
+  -keyout /tmp/k8s-webhook-server/serving-certs/tls.key \
+  -out /tmp/k8s-webhook-server/serving-certs/tls.crt \
+  -subj "/CN=localhost" \
+  -days 365
+```
+
+Set the environment variable:
+
+```
+export CERT_DIR=/tmp/k8s-webhook-server/serving-certs
+```
+
+Alternatively, you can add it to your shell config.
+
+Run the operator:
+
+```
+make run
+```
+
+This will start the webhook server on https://localhost:9443 using the generated certs.
+
+
 ### Known limitations
 
 The project is at an early stage and therefore has some limitations.
@@ -90,7 +119,7 @@ spec:
 
 ### Examples
 
-The example folder contains two files `prepare.yaml` and `singed.yaml`.
+The example folder contains two files `prepare.yaml` and `signed.yaml`.
 
 - prepare: contains a persistent volume claim and a job that downloads a signed test model.
 ```bash

@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- ml_v1alpha1_modelvalidation.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
