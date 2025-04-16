@@ -46,6 +46,9 @@ openssl req -x509 -newkey rsa:2048 -nodes \
 ```
 
 Set the environment variable:
+```
+export CERT_DIR=/tmp/k8s-webhook-server/serving-certs
+```
 
 Alternatively, you can add it to your shell config.
 
