@@ -2,7 +2,7 @@ apiVersion: ml.sigstore.dev/v1alpha1
 kind: ModelValidation
 metadata:
   labels:
-    app.kubernetes.io/name: sdk-init
+    app.kubernetes.io/name: model-validation-operator
     app.kubernetes.io/managed-by: kustomize
   name: modelvalidation-sample
 spec:

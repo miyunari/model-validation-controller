@@ -3,9 +3,10 @@ package webhooks
 import (
 	"context"
 
-	"github.com/miyunari/model-validation-controller/api/v1alpha1"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	"github.com/sigstore/model-validation-operator/api/v1alpha1"
+	"github.com/sigstore/model-validation-operator/internal/constants"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
@@ -97,7 +98,7 @@ var _ = Describe("Pod webhook", func() {
 				},
 			).Should(And(
 				WithTransform(func(containers []corev1.Container) int { return len(containers) }, Equal(1)),
-				WithTransform(func(containers []corev1.Container) string { return containers[0].Image }, Equal("ghcr.io/sigstore/model-transparency-cli:v1.0.1")),
+				WithTransform(func(containers []corev1.Container) string { return containers[0].Image }, Equal(constants.ModelTransparencyCliImage)),
 			))
 		})
 	})
