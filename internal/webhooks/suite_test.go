@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/miyunari/model-validation-controller/api/v1alpha1"
+	"github.com/sigstore/model-validation-operator/api/v1alpha1"
 	"k8s.io/klog/v2"
 	"k8s.io/klog/v2/test"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
@@ -20,7 +20,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/envtest"
-	//+kubebuilder:scaffold:imports
+	// +kubebuilder:scaffold:imports
 )
 
 // These tests use Ginkgo (BDD-style Go testing framework). Refer to
@@ -71,7 +71,7 @@ var _ = BeforeSuite(func() {
 	err = v1alpha1.AddToScheme(scheme.Scheme)
 	Expect(err).NotTo(HaveOccurred())
 
-	//+kubebuilder:scaffold:scheme
+	// +kubebuilder:scaffold:scheme
 
 	k8sClient, err = client.New(cfg, client.Options{Scheme: scheme.Scheme})
 	Expect(err).NotTo(HaveOccurred())

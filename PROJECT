@@ -8,15 +8,16 @@ layout:
 plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
-projectName: sdk-init
+projectName: model-validation-operator
 repo: github.com/sigstore/model-validation-operator
 resources:
 - api:
     crdVersion: v1
     namespaced: true
+  controller: true
   domain: sigstore.dev
   group: ml
   kind: ModelValidation
-  path: github.com/sigstore/model-validation-controller/api/v1alpha1
+  path: github.com/sigstore/model-validation-operator/api/v1alpha1
   version: v1alpha1
 version: "3"

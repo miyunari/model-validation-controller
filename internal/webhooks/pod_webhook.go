@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/sigstore/model-validation-controller/internal/constants"
+	"github.com/sigstore/model-validation-operator/internal/constants"
 	corev1 "k8s.io/api/core/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -14,7 +14,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 
 	"github.com/go-logr/logr"
-	"github.com/sigstore/model-validation-controller/api/v1alpha1"
+	"github.com/sigstore/model-validation-operator/api/v1alpha1"
 )
 
 // NewPodInterceptor creates a new pod mutating webhook to be registered
